@@ -1,0 +1,15 @@
+#map {
+  width: 475px;
+  height: 500px;
+  margin-top: 10px;
+}
+.ol-attribution {
+  display: none;
+}
+form * {
+  display: block;
+}
+#address-form, #intersection-form {
+  margin-top: 10px;
+  display: none;
+}

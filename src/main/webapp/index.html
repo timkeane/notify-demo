@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>NotifyNYC Demo</title>
+
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.0.1/ol.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/notify.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.0.1/ol.js"></script>
+  <script src="http://maps.nyc.gov/nyc-lib/v0.5.5/js/nyc-ol-lib.js"></script>
+  <script src="js/notify.js"></script>
+
+</head>
+<body>
+  <h2 class="section-title-nnyc">Notification Address</h2>
+  <form>
+  <label for="ctl00_Content_drpLocationType" id="ctl00_Content_lblLocationType">Location Type</label>
+  <select name="ctl00$Content$drpLocationType" id="ctl00_Content_drpLocationType" class="input-large">
+  	<option selected="selected" value="bynone">--Select--</option>
+  	<option value="byaddress">Address</option>
+  	<option value="byintersection">Intersection</option>
+  </select>
+</form>
+  <form id="address-form">
+    <label for="ctl00_Content_txtBuildingNumber" id="ctl00_Content_lblBuildingNumber">Building Number</label>
+    <input name="ctl00$Content$txtBuildingNumber" type="text" id="ctl00_Content_txtBuildingNumber" class="input-large">
+    <label for="ctl00_Content_txtStreetName" id="ctl00_Content_lblStreetName">Street Name</label>
+    <input name="ctl00$Content$txtStreetName" type="text" id="ctl00_Content_txtStreetName">
+    <label for="ctl00_Content_drpAddressBoro" id="ctl00_Content_lblAddressBoro">Borough</label>
+    <select name="ctl00$Content$drpAddressBoro" id="ctl00_Content_drpAddressBoro" class="input-large">
+    	<option selected="selected" value="0">--Select--</option>
+    	<option value="Bronx">Bronx</option>
+    	<option value="Brooklyn">Brooklyn</option>
+    	<option value="Manhattan">Manhattan</option>
+    	<option value="Queens">Queens</option>
+    	<option value="Staten Island">Staten Island</option>
+    </select>
+    <button>View Address on Map</button>
+  </form>
+  <form id="intersection-form">
+    <label for="ctl00_Content_txtCrossStreetOne" id="ctl00_Content_lblCrossStreetOne">Cross Street One</label>
+    <input name="ctl00$Content$txtCrossStreetOne" type="text" id="ctl00_Content_txtCrossStreetOne">
+    <label for="ctl00_Content_txtCrossStreetTwo" id="ctl00_Content_lblCrossStreetTwo">Cross Street Two</label>
+    <input name="ctl00$Content$txtCrossStreetTwo" type="text" id="ctl00_Content_txtCrossStreetTwo">
+    <label for="ctl00_Content_drpIntBoro" id="ctl00_Content_lblIntBoro">Borough</label>
+    <select name="ctl00$Content$drpIntBoro" id="ctl00_Content_drpIntBoro" class="input-large">
+    	<option selected="selected" value="0">--Select--</option>
+    	<option value="Bronx">Bronx</option>
+    	<option value="Brooklyn">Brooklyn</option>
+    	<option value="Manhattan">Manhattan</option>
+    	<option value="Queens">Queens</option>
+    	<option value="Staten Island">Staten Island</option>
+    </select>
+    <button>View Intersection on Map</button>
+  </form>
+  <div id="map"></div>
+</body>
+</html>
