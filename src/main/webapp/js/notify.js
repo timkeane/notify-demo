@@ -70,19 +70,19 @@ function geocode(endpoint, args){
 };
 
 function isAddressGeocodeSuccess(address){
-    return $.inArray(address.returnCode1e, ['00', '01']) > -1 ||
-      $.inArray(address.returnCode1a, ['00', '01']) > -1;
+  return $.inArray(address.returnCode1e, ['00', '01']) > -1 ||
+    $.inArray(address.returnCode1a, ['00', '01']) > -1;
 };
 
 function isIntersectionGeocodeSuccess(intersection){
-    return $.inArray(intersection.geosupportReturnCode, ['00', '01']) > -1;
+  return $.inArray(intersection.geosupportReturnCode, ['00', '01']) > -1;
 };
 
 function coordinateForAddress(address){
   if (address.internalLabelXCoordinate && address.internalLabelYCoordinate){
     return [address.internalLabelXCoordinate, address.internalLabelYCoordinate];
   }
-    return [address.xCoordinate, address.yCoordinate];
+  return [address.xCoordinate, address.yCoordinate];
 };
 
 function coordinateForIntersection(intersection){
