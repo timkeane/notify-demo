@@ -69,31 +69,48 @@ function geocode(endpoint, args){
   });
 };
 
-function isGeocodeSuccess(response){
-  if (response.address){
-    return $.inArray(response.address.geosupportReturnCode, ['00', '01']) > -1 ||
-      $.inArray(response.address.returnCode1a, ['00', '01']) > -1;
-  }else{
-    return $.inArray(response.intersection.geosupportReturnCode, ['00', '01']) > -1;
+function isGeocodeSuccess(){
+
+};
+
+function isAddressGeocodeSuccess(address){
+    return $.inArray(address.returnCode1e, ['00', '01']) > -1 ||
+      $.inArray(address.returnCode1a, ['00', '01']) > -1;
+};
+
+function isIntersectionGeocodeSuccess(intersection){
+    return $.inArray(intersection.geosupportReturnCode, ['00', '01']) > -1;
+};
+
+function coordinateForAddress(address){
+  if (address.internalLabelXCoordinate && address.internalLabelYCoordinate){
+    return [address.internalLabelXCoordinate, address.internalLabelYCoordinate];
   }
+    return [address.xCoordinate, address.yCoordinate];
+};
+
+function coordinateForIntersection(intersection){
+  return [intersection.xCoordinate, intersection.yCoordinate];
 };
 
 function handleGeocodeResponse(response){
-  if (isGeocodeSuccess(response)){
-    var coord;
-    response = response.address || response.intersection;
-    if (response.internalLabelXCoordinate && response.internalLabelYCoordinate){
-      coord = [response.internalLabelXCoordinate, response.internalLabelYCoordinate];
-    }else{
-      coord = [response.xCoordinate, response.yCoordinate];
-    }
-    coord = proj4('EPSG:2263', 'EPSG:3857', coord);
-    userLocation.setGeometry(new ol.geom.Point(coord));
-    view.animate({
-      center: coord,
-      zoom: 17
-    });
+  var coord;
+  if (response.address && isAddressGeocodeSuccess(response.address)){
+    coord = coordinateForAddress(response.address);
+  }else if (response.intersection && isIntersectionGeocodeSuccess(response.intersection)){
+    coord = coordinateForIntersection(response.intersection);
   }else{
     alert('Your input was not understood');
+    return;
   }
+  showLocation(coord);
+};
+
+function showLocation(coord){
+  coord = proj4('EPSG:2263', 'EPSG:3857', coord);
+  userLocation.setGeometry(new ol.geom.Point(coord));
+  view.animate({
+    center: coord,
+    zoom: 17
+  });
 };
