@@ -63,18 +63,31 @@ function geocode(endpoint, args){
     dataType: 'jsonp',
     success: handleGeocodeResponse,
     error: function(){
+      alert('Your input was not understood');
       console.error(arguments);
     }
   });
 };
 
+function isGeocodeSuccess(response){
+  if (response.address){
+    return $.inArray(response.address.geosupportReturnCode, ['00', '01']) > -1 ||
+      $.inArray(response.address.returnCode1a, ['00', '01']) > -1;
+  }else{
+    return $.inArray(response.intersection.geosupportReturnCode, ['00', '01']) > -1;
+  }
+};
+
 function handleGeocodeResponse(response){
-  response = response.address || response.intersection;
-  if (response.geosupportReturnCode == '00' || response.geosupportReturnCode == '01'){
-    var coord = proj4('EPSG:2263', 'EPSG:3857', [
-      response.internalLabelXCoordinate || response.xCoordinate,
-      response.internalLabelYCoordinate || response.yCoordinate
-    ]);
+  if (isGeocodeSuccess(response)){
+    var coord;
+    response = response.address || response.intersection;
+    if (response.internalLabelXCoordinate && response.internalLabelYCoordinate){
+      coord = [response.internalLabelXCoordinate, response.internalLabelYCoordinate];
+    }else{
+      coord = [response.xCoordinate, response.yCoordinate];
+    }
+    coord = proj4('EPSG:2263', 'EPSG:3857', coord);
     userLocation.setGeometry(new ol.geom.Point(coord));
     view.animate({
       center: coord,
