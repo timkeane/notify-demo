@@ -69,10 +69,6 @@ function geocode(endpoint, args){
   });
 };
 
-function isGeocodeSuccess(){
-
-};
-
 function isAddressGeocodeSuccess(address){
     return $.inArray(address.returnCode1e, ['00', '01']) > -1 ||
       $.inArray(address.returnCode1a, ['00', '01']) > -1;
